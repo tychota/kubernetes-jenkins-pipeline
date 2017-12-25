@@ -20,9 +20,21 @@ pipeline {
       }
     }
     stage('Run maven 2') {
+      agent {
+        kubernetes {
+          //cloud 'kubernetes'
+          label 'node'
+          containerTemplate {
+            name 'node'
+            image 'node:alpine'
+            ttyEnabled true
+            command 'cat'
+          }
+        }
+      }
       steps {
-        container('maven') {
-          sh 'mvn -version'
+        container('node') {
+          sh 'node -version'
         }
       }
     }
