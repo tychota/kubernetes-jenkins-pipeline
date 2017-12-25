@@ -12,6 +12,12 @@ pipeline {
     }
   }
   stages {
+    stage('Start') {
+      steps {
+        echo 'Start'
+        sh 'date +"%T"'
+      }
+    }
     stage('Print version') {
       parallel {
         stage('Run maven version') {
