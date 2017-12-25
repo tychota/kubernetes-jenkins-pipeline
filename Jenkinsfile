@@ -1,5 +1,16 @@
 pipeline {
-  agent none
+  agent {
+    kubernetes {
+      //cloud 'kubernetes'
+      label 'alpine'
+      containerTemplate {
+        name 'alpine'
+        image 'alpine'
+        ttyEnabled true
+        command 'cat'
+      }
+    }
+  }
   stages {
     stage('Print version') {
       parallel {
