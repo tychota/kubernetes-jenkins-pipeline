@@ -34,7 +34,7 @@ pipeline {
       }
       steps {
         container('node') {
-          sh 'node -version'
+          sh 'node --version'
         }
       }
     }
