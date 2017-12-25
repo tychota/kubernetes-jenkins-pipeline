@@ -1,4 +1,5 @@
 pipeline {
+  agent none
   stages {
     stage('Print version') {
       parallel {
@@ -15,6 +16,7 @@ pipeline {
               }
             }
           }
+          failFast true
           steps {
             container('maven') {
               sh 'mvn -version'
@@ -34,6 +36,7 @@ pipeline {
               }
             }
           }
+          failFast true
           steps {
             container('node') {
               sh 'node --version'
