@@ -1,27 +1,22 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      parallel {
-        stage('Build') {
-          steps {
-            sh 'echo "Hello World"'
-            sh '''
-                    echo "Multiline shell steps"
-                    ls -lah
-                '''
-          }
-        }
-        stage('git status') {
-          steps {
-            sh 'git status'
-          }
-        }
+  agent {
+    kubernetes {
+      //cloud 'kubernetes'
+      label 'mypod'
+      containerTemplate {
+        name 'maven'
+        image 'maven:3.3.9-jdk-8-alpine'
+        ttyEnabled true
+        command 'cat'
       }
     }
-    stage('Blop 2') {
+  }
+  stages {
+    stage('Run maven') {
       steps {
-        input(message: 'Destroy the world', ok: 'Yes', submitter: 'blop', submitterParameter: 'blop')
+        container('maven') {
+          sh 'mvn -version'
+        }
       }
     }
   }
